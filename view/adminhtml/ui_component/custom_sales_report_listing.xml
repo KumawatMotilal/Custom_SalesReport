@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<argument name="data" xsi:type="array">
+    <item name="js_config" xsi:type="array">
+        <item name="provider" xsi:type="string">custom_sales_report_listing.custom_sales_report_listing_data_source</item>
+    </item>
+</argument>
+<settings>
+    <spinner>custom_sales_report_columns</spinner>
+    <deps>
+        <dep>custom_sales_report_listing.custom_sales_report_listing_data_source</dep>
+    </deps>
+</settings>
+<dataSource name="custom_sales_report_listing_data_source" component="Magento_Ui/js/grid/provider">
+    <settings>
+        <storageConfig>
+            <param name="indexField" xsi:type="string">item_id</param>
+        </storageConfig>
+        <updateUrl path="mui/index/render"/>
+    </settings>
+    <aclResource>Custom_SalesReport::report</aclResource>
+    <dataProvider class="Custom\SalesReport\Ui\DataProvider\ReportDataProvider" name="custom_sales_report_listing_data_source">
+        <settings>
+            <requestFieldName>id</requestFieldName>
+            <primaryFieldName>item_id</primaryFieldName>
+        </settings>
+    </dataProvider>
+</dataSource>
+
+<listingToolbar name="listing_top">
+    <settings>
+        <sticky>true</sticky>
+    </settings>
+    <bookmark name="bookmarks"/>
+    <columnsControls name="columns_controls"/>
+    <filters name="listing_filters">
+        <argument name="data" xsi:type="array">
+            <item name="observers" xsi:type="array">
+                <item name="column" xsi:type="string">column</item>
+            </item>
+        </argument>
+        <settings>
+            <statefull>
+                <property name="applied" xsi:type="boolean">true</property>
+            </statefull>
+        </settings>
+    </filters>
+   <massaction name="listing_massaction">
+        <action name="delete">
+            <settings>
+                <confirm>
+                    <message translate="true">Are you sure you want to delete selected items?</message>
+                    <title translate="true">Delete items</title>
+                </confirm>
+                <url path="customsalesreport/report/massDelete"/>
+                <type>delete</type>
+                <label translate="true">Delete</label>
+            </settings>
+        </action>
+    </massaction>
+    <paging name="listing_paging"/>
+</listingToolbar>
+    <columns name="custom_sales_report_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>item_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="order_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Order ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="product_name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Product Name</label>
+            </settings>
+        </column>
+        <column name="qty_ordered">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Quantity Sold</label>
+            </settings>
+        </column>
+        <column name="total_revenue" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Total Revenue</label>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Sale Date</label>
+                <dateFormat>MMM d, YYYY</dateFormat>
+                <timezone>false</timezone>
+                <sorting>desc</sorting>
+                <controlVisibility>true</controlVisibility>
+            </settings>
+        </column>
+    </columns>
+</listing>

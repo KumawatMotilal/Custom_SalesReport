@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Custom_SalesReport::reports" 
+             title="Custom Sales Report" 
+             module="Custom_SalesReport" 
+             sortOrder="50" 
+             parent="Magento_Reports::report" 
+             action="customsalesreport/report/index" 
+             resource="Custom_SalesReport::report"/>
+    </menu>
+</config>
